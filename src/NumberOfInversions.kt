@@ -3,7 +3,8 @@ import java.io.InputStream
 
 object NumberOfInversions {
 
-    //var list = arrayOf("4", "3", "2", "1")
+    var list = arrayOf(4, 3, 2, 1)
+    var numOfInversions = 0
 
     //runtime: O(n logn)
     //1)base: 1 element array
@@ -14,36 +15,51 @@ object NumberOfInversions {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        var list = arrayListOf<Int>()
+        /*var list = arrayListOf<Int>()
         val inputStream: InputStream = File("src/integerarray.txt").inputStream()
         val lineList = mutableListOf<String>()
         inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it)} }
-        lineList.forEach{list.add(it.toInt())}
-        print(list.size)
-        //lineList.forEach{println(">  " + it)}
+        lineList.forEach{list.add(it.toInt())}*/
 
-        //print(mergeSort(list))
-        /*list.sort()
-        for (i in list){
-            print(i + " ")
-        }*/
+        var sortedList = mergeSort(list)
+
+        for (i in sortedList) {
+            print(i.toString())
+        }
+
+        println()
+        print("Inversions: " + numOfInversions)
     }
 
-    private fun mergeSort(list: Array<String>): Array<String> {
-        if(list.size == 1){
+    private fun mergeSort(list: Array<Int>): Array<Int> {
+        if (list.size == 2) {
             return sortedArray(list)
         } else {
-            //todo: split list
-            list.sort()
-            //mergeSort()
-            return list
+            var firstHalf = mergeSort(list.copyOfRange(0, list.size / 2))
+            var secondHalf = mergeSort(list.copyOfRange(list.size / 2, list.size))
+            var i = 0
+            var j = 0
+            var sortedList = arrayListOf<Int>()
+            while (i < firstHalf.size && j < secondHalf.size) {
+                if (secondHalf[j] < firstHalf[i]) {
+                    //todo: count inversion
+                    sortedList.add(secondHalf[j])
+                    j++
+                } else {
+                    sortedList.add(firstHalf[i])
+                    sortedList.add(secondHalf[j])
+                    i++
+                    j++
+                }
+            }
+            return sortedList.toTypedArray()
         }
     }
 
-    private fun sortedArray(list: Array<String>): Array<String> {
-        if(list[0] > list[1]){
-            var temp = list[0]
-            return arrayOf(list[1], temp)
+    private fun sortedArray(list: Array<Int>): Array<Int> {
+        if (list[1] < list[0]) {
+            //todo: count inversion
+            return arrayOf(list[1], list[0])
         } else {
             return list
         }
