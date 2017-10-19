@@ -24,6 +24,7 @@ object NumberOfInversionsTest{
         inputStream.bufferedReader().useLines { lines -> lines.forEach { lineList.add(it)} }
         lineList.forEach{veryBigArray.add(it.toInt())}
         test(veryBigArray.toTypedArray())
+        //answer: 2407905288
     }
 
     fun test(test: Array<Int>){
