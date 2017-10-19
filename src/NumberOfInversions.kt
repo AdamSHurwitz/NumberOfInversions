@@ -12,6 +12,9 @@ object NumberOfInversions {
     var numOfInversions = 0
 
     fun mergeSort(list: Array<Int>): Array<Int> {
+        if (list.size == 1) {
+            return list
+        }
         if (list.size == 2) {
             return sortedArray(list)
         } else {
@@ -39,7 +42,6 @@ object NumberOfInversions {
                     j++
                 }
             }
-
             return sortedList.toTypedArray()
         }
     }
@@ -53,21 +55,9 @@ object NumberOfInversions {
         }
     }
 
-    private fun getSplitArray(list: Array<Int>): Pair<Array<Int>, Array<Int>> {
-        if (hasBaseOfTwo(list.size)) {
-            return Pair(mergeSort(list.copyOfRange(0, list.size / 2)), mergeSort(list.copyOfRange(list.size / 2, list.size)))
-        } else {
-            return Pair(arrayOf(), arrayOf())
-        }
-    }
+    private fun getSplitArray(list: Array<Int>): Pair<Array<Int>, Array<Int>>
+            = Pair(mergeSort(list.copyOfRange(0, list.size / 2)), mergeSort(list.copyOfRange(list.size / 2, list.size)))
 
-    private fun hasBaseOfTwo(size: Int): Boolean {
-        var product = 2
-        while (product < size) {
-            product *= 2
-        }
-        return product == size
-    }
 
 
 }
