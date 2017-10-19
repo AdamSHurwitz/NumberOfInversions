@@ -9,7 +9,7 @@ object NumberOfInversions {
     //• left inversion i,j <= n/2, right inversion i,j > n/2, split i <= n/2, j > n/2
     //3)count split inversions when c array contains larger values than b array
     //• when element of 2nd array C gets copied to output D, increment total by num of elements remaining in B
-    var numOfInversions = 0
+    var numOfInversions: Long = 0
 
     fun mergeSort(list: Array<Int>): Array<Int> {
         if (list.size == 1) {
@@ -29,15 +29,14 @@ object NumberOfInversions {
                         sortedList.add(splitArray.first[i])
                         i++
                     } else {
+                        numOfInversions += (splitArray.first.size - i)
                         sortedList.add(splitArray.second[j])
                         j++
                     }
-                }
-                if (j == splitArray.second.size && i < splitArray.first.size) {
+                } else if (j == splitArray.second.size && i < splitArray.first.size) {
                     sortedList.add(splitArray.first[i])
                     i++
-                }
-                if (i == splitArray.first.size && j < splitArray.second.size) {
+                } else if (i == splitArray.first.size && j < splitArray.second.size) {
                     sortedList.add(splitArray.second[j])
                     j++
                 }
@@ -48,7 +47,7 @@ object NumberOfInversions {
 
     private fun sortedArray(list: Array<Int>): Array<Int> {
         if (list[1] < list[0]) {
-            //todo: count inversion
+            numOfInversions+=1
             return arrayOf(list[1], list[0])
         } else {
             return list
@@ -57,7 +56,6 @@ object NumberOfInversions {
 
     private fun getSplitArray(list: Array<Int>): Pair<Array<Int>, Array<Int>>
             = Pair(mergeSort(list.copyOfRange(0, list.size / 2)), mergeSort(list.copyOfRange(list.size / 2, list.size)))
-
 
 
 }
